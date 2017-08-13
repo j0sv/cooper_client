@@ -3,6 +3,7 @@ import { NavController, ModalController} from 'ionic-angular';
 import { PersonProvider } from '../../providers/person/person';
 import { ResultsPage } from '../../pages/results/results'
 import { PerfomanceDataProvider } from '../../providers/perfomance-data/perfomance-data';
+import { Angular2TokenService } from 'angular2-token';
 
 @Component({
   selector: 'page-home',
@@ -12,14 +13,19 @@ import { PerfomanceDataProvider } from '../../providers/perfomance-data/perfoman
 export class HomePage {
 
   user: any = {};
+  userIsLoggedIn: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public person: PersonProvider,
     public perfomanceData: PerfomanceDataProvider,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private _tokenService: Angular2TokenService
   ) {
     this.user = { distance: 3000, age: 20, gender: 'female' };
+    this.userIsLoggedIn = _tokenService.userSignedIn();
+
+    console.log(this.userIsLoggedIn);
   }
 
   showResults() {
